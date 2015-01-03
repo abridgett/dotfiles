@@ -1,0 +1,47 @@
+#autodetach off
+escape ^o^o
+bind s screen /bin/bash --login
+vbellwait 0
+defutf8 on
+defscrollback 10000
+# the equivalent of "-A"?
+fit
+
+# bump output buffer up from 256
+defobuflimit 32768
+
+# don't hang
+defnonblock on
+nonblock on
+
+# pass flow control through to underlying program. always
+defflow off
+
+# status line with more than one window
+caption string "%?%F%{.R.}%?%3n %t%? [%h]%?"
+
+# hilighting
+sorendition =s dG
+
+# enable ACLs
+multiuser on
+
+# display messages faster
+msgminwait .5
+
+startup_message off
+
+# set these terminals up to be 'optimal' instead of vt100
+termcapinfo xterm*|linux*|rxvt*|Eterm* OP
+
+# tell xterm to use the normal screen buffer (which has scrollback)
+# note het alternate screen buffer
+termcapinfo xterm|xterms|xs|rxvt ti@:te@
+
+# advertise hardstatus support to $TERMCAP
+termcapinfo  * '' 'hs:ts=\E_:fs=\E\\:ds=\E_\E\\'
+# set every new windows hardstatus line to something descriptive
+#defhstatus "screen: ^E (^Et)^G^[]20;^E.xpm"
+defhstatus "screen: ^E (^Et)"
+termcapinfo xterm 'hs:ts=\E]2;:fs=\007:ds=\E]0;screen\007'
+
