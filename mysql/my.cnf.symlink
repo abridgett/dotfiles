@@ -1,0 +1,8 @@
+[mysql]
+auto-rehash
+# backslashes should be doubled up
+prompt="[\\R:\\m:\\s]\\d/\\h> "
+show-warnings
+compress
+# delete and update must set WHERE or LIMIT
+safe-updates
