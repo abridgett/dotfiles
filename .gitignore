@@ -6,3 +6,6 @@ atom.symlink/storage
 atom.symlink/themes
 
 local-private
+vim.symlink/backups
+vim.symlink/swaps
+vim.symlink/undo
