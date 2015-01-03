@@ -1,0 +1,4 @@
+db=mysql
+idle=0
+delay=2
+prompt=1
