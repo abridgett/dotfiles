@@ -1,0 +1,9 @@
+# where to find upstream tarballs
+svn-override=origDir=../binaries
+
+# where to build package
+svn-override=buildArea=/tmp/svn-build
+
+# where to move .deb, .dsc, .diff, .orig.tar.gz etc to
+svn-move-to=../binaries
+
