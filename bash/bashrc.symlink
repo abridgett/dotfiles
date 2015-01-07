@@ -1,0 +1,128 @@
+# ~/.bashrc: executed by bash(1) for non-login shells
+
+
+# Get configuration
+if [ -z "$ORGANIZATION" ]; then
+  . $HOME/.profile
+fi
+
+# exit shell when you receive three EOFs
+ignoreeof=3
+set -o emacs
+set -o ignoreeof
+
+# Source global bashrc
+if [ -f /etc/bashrc ]; then
+  . /etc/bashrc
+fi
+
+# prompt is (plain, xterm, xterm+user/hostname) in colour and without
+set_ps1()
+{
+  local red="\[\033[31m\]"
+  local green="\[\033[32m\]"
+  local yellow="\[\033[33m\]"
+  local blue="\[\033[34m\]"
+  local magenta="\[\033[35m\]"
+  local cyan="\[\033[36m\]"
+  local white="\[\033[37m\]"
+  local whitish="\[\033[39m\]"
+  local bw="\[\033]0;" # begin window
+  local ew="\007\]"    # end window
+
+  if [ -z "$debian_chroot" ] && [ -r "/etc/debian_chroot" ]; then
+    debian_chroot="`cat /etc/debian_chroot`"
+  fi
+  local chroot=""
+  if [ "$debian_chroot" ]; then
+    chroot="[$debian_chroot]"
+  fi
+  if [ "$TERM" = "screen" ]; then
+    screen="(screen) "
+  fi
+
+  # Only add username/hostname to prompt if we are remote
+  local xterm_session=`who am i | sed 's/[^(]*//'`
+
+  if [ -x /usr/bin/tput ] && tput setaf 1 >/dev/null 2>&1; then
+    if ! [ "$xterm_session" ]; then
+      export PS1="$cyan[\A]$green\h:$red$chroot$magenta\w\\\$$whitish "
+    else
+      # local display or remote?
+      if ! [ "${xterm_session##(:*}" ]; then   # begins (:...)
+        export PS1="$bw\h: $screen$chroot\w$ew$cyan[\A]$red$chroot$magenta\w\\\$$whitish "
+      else
+        if [ ! "${TERM##xterm*}" ]; then
+          export PS1="$bw\h: $screen$chroot\w$ew$cyan[\A]$yellow\u$green@\h:$red$chroot$magenta\w\\\$$whitish "
+        else
+          export PS1="$cyan[\A]$yellow\u$green@\h:$red$chroot$magenta\w\\\$$whitish "
+        fi
+      fi
+    fi
+  else
+    if ! [ "$xterm_session" ]; then
+      export PS1="[\A]\h:$chroot\w\\\$ "
+    else
+      export PS1="[\A]\u@\h:$chroot\w\\\$ "
+    fi
+  fi
+}
+set_ps1
+# show timestamps when calling scripts with "set -x"
+PS4='+\t '
+
+umask 022
+
+# Use colours for ls, grep, mark filetypes
+if [  "$TERM" != "dumb" ] && [ -x /usr/bin/dircolors ]; then
+  if [ -e ~/.dir_colors ]; then
+    eval `/usr/bin/dircolors ~/.dir_colors`
+  else
+    eval "`dircolors`"
+  fi
+  export LS_OPTIONS='--color=auto -F -b'
+  alias ls='ls $LS_OPTIONS'
+  
+  alias grep='grep --color=auto'
+  alias fgrep='fgrep --color=auto'
+  alias egrep='egrep --color=auto'
+else
+  alias ls='ls -F'
+fi
+
+if [ "$BASH_VERSION" ] && [ -r /etc/bash_completion ] && [ ! "$BASH_COMPLETION" ]; then
+  . /etc/bash_completion
+fi
+if [ -f /usr/local/google-cloud-sdk/completion.bash.inc ]; then
+  . /usr/local/google-cloud-sdk/completion.bash.inc
+fi
+
+# check the window size after each command and, if necessary,
+# update the values of LINES and COLUMNS.
+shopt -s checkwinsize
+shopt -s cdspell checkhash
+
+# append to the history file, don't overwrite it
+shopt -s histappend
+
+# Cope without this now
+#if tty >/dev/null 2>&1; then
+#  if [ "$SYS" = hp ]; then
+#    # we are braindead (DEL is intr)
+#    stty intr  erase 
+#  else
+#    stty erase 
+#  fi
+#fi
+
+alias dc='cd'
+alias sl='ls'
+alias les='less'
+alias lesss='less'
+
+alias cp='cp -i'
+alias mv='mv -i'
+
+# Add an "alert" alias for long running commands.  Use like so:
+#   sleep 10; alert
+alias alert='notify-send --urgency=low -i "$([ $? = 0 ] && echo terminal || echo error)" "$(history|tail -n1|sed -e '\''s/^\s*[0-9]\+\s*//;s/[;&|]\s*alert$//'\'')"'
