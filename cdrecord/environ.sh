@@ -1,0 +1,1 @@
+export CDR_DEVICE=/dev/cdrom
