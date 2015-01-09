@@ -1,6 +1,8 @@
 " TIPS
 " :[VS]Explore (vertical, split) file explorer
 
+""" PATHOGEN https://github.com/tpope/vim-pathogen
+execute pathogen#infect()
 
 """ APPEARANCE
 
@@ -83,6 +85,9 @@ set noeol
 " Enable mouse in all modes
 set mouse=a
 " use Alt+mouse to select and cmd-copy/paste
+if v:version > 703 || v:version == 703 && has("patch541")
+  set formatoptions+=j " Delete comment character when joining commented lines
+endif
 
 
 """ BACKUPS
@@ -162,6 +167,10 @@ au BufWrite /tmp/crontab.* set nowritebackup
 " only tab complete upto what is unique
 set wildmode=longest,list:longest,list:full
 
+" auto reload files if externally altered
+"set autoread
+" also allow mac style line endings
+set fileformats+=mac
 
 
 " from http://www.vim.org/scripts/script.php?script_id=2184
