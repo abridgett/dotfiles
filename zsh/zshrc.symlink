@@ -1,40 +1,48 @@
+source $HOME/.antigen/antigen.zsh clone/antigen.zsh
+
+antigen use oh-my-zsh
+
+antigen bundles << EOF
+aws
+#docker
+#git - replaces by gitfast
+gitfast
+git-extras
+#git-flow
+#github
+#git-remote-branch
+pip
+svn
+zsh-users/zsh-syntax-highlighting
+zsh-users/zsh-completions src
+zsh-users/zsh-history-substring-search
+EOF
+
+#antigen theme robbyrussell
+#antigen theme ys
+
+# initialises completion
+antigen apply
+
+# For gitfast
+export GIT_PS1_SHOWDIRTYSTATE=1
+export GIT_PS1_SHOWSTASHSTATE=1
+export GIT_PS1_SHOWUNTRACKEDFILES=1
+export GIT_PS1_SHOWUPSTREAM=auto,verbose
+
+# precmd is faster and has colours.  Note the embedded newline
+precmd () { __git_ps1 \
+	"%{$reset_color%}%{$fg[blue]%}[%*]%(?..%{$reset_color%} (%{$fg[red]%}%?%{$reset_color%}%)) %{$fg[yellow]%}%n%{$fg[white]%}@%{$fg[cyan]%}%m%{$reset_color%}" \
+	"
+%{$terminfo[bold]$fg[magenta]%}%~%{$reset_color%}%(!.#.%$) " "(%s)" }
+
+
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
 
-# your project folder that we can `c [tab]` to
-export PROJECTS=~/Code
+unsetopt nomatch
 
-# use .localrc for SUPER SECRET CRAP that you don't
-# want in your public, versioned repo.
-if [[ -a ~/.localrc ]]
-then
-  source ~/.localrc
+if [ -r $HOME/.profile.common ]; then
+	. $HOME/.profile.common
 fi
 
-# all of our zsh files
-typeset -U config_files
-config_files=($ZSH/**/*.zsh)
-
-# load the path files
-for file in ${(M)config_files:#*/path.zsh}
-do
-  source $file
-done
-
-# load everything but the path and completion files
-for file in ${${config_files:#*/path.zsh}:#*/completion.zsh}
-do
-  source $file
-done
-
-# initialize autocomplete here, otherwise functions won't be loaded
-autoload -U compinit
-compinit
-
-# load every completion after autocomplete loads
-for file in ${(M)config_files:#*/completion.zsh}
-do
-  source $file
-done
-
-unset config_files
