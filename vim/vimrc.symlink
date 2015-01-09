@@ -82,6 +82,7 @@ set binary
 set noeol
 " Enable mouse in all modes
 set mouse=a
+" use Alt+mouse to select and cmd-copy/paste
 
 
 """ BACKUPS
@@ -123,6 +124,8 @@ set shiftwidth=2
 " use N spaces until you reach tabstop, then use tabs
 set softtabstop=2
 set tabstop=2
+" always use spaces
+set expandtab
 
 
 " netrw remote support: :e scp://server.example.com//tmp/filename
