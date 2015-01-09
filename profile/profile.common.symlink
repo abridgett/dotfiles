@@ -1,0 +1,21 @@
+# my project space
+export PROJECTS=$HOME/projects
+
+# Very simple PATH to begin with
+PATH=/bin:/sbin:/usr/bin:/usr/sbin
+
+# Run all profile scripts first
+if [ ! "`readlink $0`" ]; then
+  mydir=`dirname $0`
+else
+  mydir="`dirname $0`/$(dirname $(readlink $0))"
+fi
+for file in $mydir/*.sh; do
+  if [ -r $file ]; then
+    . $file
+  fi
+done
+
+for file in $ZSH/*/environ.sh; do
+  . $file
+done

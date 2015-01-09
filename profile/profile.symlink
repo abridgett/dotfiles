@@ -1,4 +1,4 @@
-#!/bin/sh
+# profile for Bash
 
 [ -r /etc/profile ] && . /etc/profile
 
@@ -6,126 +6,8 @@ if tty >/dev/null 2>&1; then
   mesg n
 fi
 
-if [ -x /usr/bin/less ]; then
-  export PAGER=less
-  export LESS='-iRFXMqj2PM?f%f:<PIPE>.?lb %lb/?L%L:\?..?pb %pb\%:?bb %bb/%B bytes..?m (%i of %m).?e EOF.$'
-  if [ -r "~/bin/lesspipe" ]; then
-   export LESSOPEN="|~/bin/lesspipe '%s'"
-  elif [ -r /usr/bin/lesspipe ]; then
-    export LESSOPEN='| /usr/bin/lesspipe %s'
-  elif [ -r /usr/bin/lesspipe.sh ]; then
-    export LESSOPEN='| /usr/bin/lesspipe.sh %s'
-  fi
-fi
-
-# What system are we on (saves running uname lots)
-case `uname -s` in
-  Linux) export SYS=linux; export SYSVER=$3;;
-  AIX) export SYS=aix; export SYSVER=$4$3;;
-  SunOS) export SYS=sun; export SYSVER=$3;;
-  HP-UX) export SYS=hp; export SYSVER=$3;;
-  *) export DEBUG=T; export SYS=unknown; export SYSVER=unknown;;
-esac
-
-
-PATH=/bin:/sbin:/usr/bin:/usr/sbin
-if [ "$SYS" = linux ]; then
-  PATH=$PATH:/usr/X11R6/bin:/usr/games
-else
-  PATH=~/bin/$SYS:/usr/tools/bin:/etc:$PATH:/usr/ucb:/usr/bin/X11:/usr/contrib/bin
-fi
-if [ "$SYS" = aix ]; then
-  # DEBUG=xldb
-  PATH=~/bin/aix41:$PATH:/usr/ibmcxx/bin:/usr/lpp/UMS/bin
-elif [ "$SYS" = sun ]; then
-  # DEBUG=debugger
-  PATH=$PATH:/opt/SUNWspro/bin:/usr/openwin/bin
-elif [ "$SYS" = hp ]; then
-  # DEBUG=dde
-  PATH=$PATH:/opt/langtools/bin
-fi
-export PATH=$PATH:/usr/local/bin:/usr/local/sbin:.
-# set PATH so it includes user's private bin if it exists
-if [ -d "$HOME/bin" ] ; then
-    PATH="$HOME/bin:$PATH"
-fi
-export PATH
-if [ -f /usr/local/google-cloud-sdk/path.bash.inc ]; then
-  . /usr/local/google-cloud-sdk/path.bash.inc
-fi
-
-export EDITOR=vi
-export VISUAL=$EDITOR
-
-
-export PATCH_THE_KERNEL=YES    # for make-kpkg
-export CONCURRENCY_LEVEL=2     # for make-kpkg
-export INITRD=YES              # for make-kpkg
-export ZSSHESCAPE="^["         # for zssh
-export HISTSIZE=200            # Number of lines in history file.
-export HISTCONTROL=ignoreboth  # uniq history and ignore spaces
-export HISTIGNORE="&:bg:exit"  # ignore duplicate commands
-export HISTTIMEFORMAT="%H:%M:%S %d/%m/%Y "
-#Synchronise histories of different shell instances
-#PROMPT_COMMAND="$PROMPT_COMMAND history -a; history -r;"
-
-# Personal details
-export IRCNICK=Wyvern
-export IRCNAME="Adrian Bridgett <adrian@smop.co.uk>"
-export IRCSERVER=irc.blitzed.org
-export EMAIL=adrian@smop.co.uk
-export ORGANIZATION='Bitcube Ltd.'
-
-# for cdrecord
-export CDR_DEVICE=/dev/cdrom
-
-# This makes me still be able to run X stuff when su'd to root.
-if [ -z "$XAUTHORITY" ] && [ -r "$HOME/.Xauthority" ]; then
-  export XAUTHORITY=$HOME/.Xauthority
-fi
-
-# for windoze boxes
-if [ "$TERM" = "ansi" ]; then
-  export TERM=vt100
-fi
-
-# eval GPG daemon if needed
-#if ! [ -x /usr/bin/seahorse-agent ] &&
-#   [ -f $HOME/.gpg-agent-info ] && 
-#   kill -0 ‘cut -d: -f 2 $HOME/.gpg-agent-info‘ 2>/dev/null; then
-#  export GPG_AGENT_INFO=‘cat $HOME/.gpg-agent-info‘
-#elif [ -e /usr/bin/gpg-agent ]; then
-#  eval ‘gpg-agent --daemon --write-env-file‘
-#fi
-
-# Ansible
-export PATH=$PATH:$HOME/projects/ansible/bin
-export PYTHONPATH=$HOME/projects/ansible/lib:
-export ANSIBLE_LIBRARY=$HOME/projects/ansible/library:/usr/share/ansible/
-export MANPATH=$HOME/projects/ansible/docs/man:
-
-# Go is unusual - http://golang.org/doc/code.html
-export GOPATH=$HOME/projects/go
-export PATH=$PATH:$GOPATH/bin
-
-# Packer
-if [ -d "/usr/local/packer" ]; then
-  export PATH=$PATH:/usr/local/packer
-fi
-
-# gem install --user-install
-for dir in $HOME/.gem/ruby/*; do 
- if [ -d "$dir" ]; then
-   export PATH=$PATH:$dir
- fi
-done
-
-# Eucalyptus support
-if [ -r "$HOME/.euca/eucarc" ]; then
-  . "$HOME/.euca/eucarc"
-fi
-if [ -r "$HOME/.ec2/ec2.rc" ]; then
-  . $HOME/.ec2/ec2.rc
+if [ -r $HOME/.profile.common ]; then
+  . $HOME/.profile.common
 fi
 
 # source .bashrc if interactive
@@ -137,7 +19,3 @@ if [ "$BASH" ] && [ -n "$BASH_VERSION" ] && [ -z "${-%%*i*}" ]; then
     . ./.bashrc
   fi
 fi
-
-# to fix eclipse: https://bugs.eclipse.org/bugs/show_bug.cgi?id=326526
-export GIT_SSH=/usr/bin/ssh
-
