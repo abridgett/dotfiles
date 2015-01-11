@@ -11,9 +11,28 @@ git-extras
 #git-flow
 #github
 #git-remote-branch
+#gpg-agent
+#history-substring-search
+iwhois
+jsontools
+mosh
+osx
 pip
+pj
+pylint
+python
+#safe-paste
+#ssh-agent
 svn
+#taskwarrior  # todo list
+tmux
+tmuxinator
+urltools
+vagrant
+vundle
+
 zsh-users/zsh-syntax-highlighting
+#tarruda/zsh-autosuggestions
 zsh-users/zsh-completions src
 zsh-users/zsh-history-substring-search
 EOF
@@ -34,8 +53,17 @@ export GIT_PS1_SHOWUPSTREAM=auto,verbose
 precmd () { __git_ps1 \
 	"%{$reset_color%}%{$fg[blue]%}[%*]%(?..%{$reset_color%} (%{$fg[red]%}%?%{$reset_color%}%)) %{$fg[yellow]%}%n%{$fg[white]%}@%{$fg[cyan]%}%m%{$reset_color%}" \
 	"
-%{$terminfo[bold]$fg[magenta]%}%~%{$reset_color%}%(!.#.%$) " "(%s)" }
+%{$terminfo[bold]$fg[magenta]%}%~%{$reset_color%}%(!.#.$) " "(%s)" }
 
+# Automatically list directory contents on `cd`.
+auto-ls () { ls; }
+chpwd_functions=( auto-ls $chpwd_functions )
+
+# Setup suggestions (tarruda/zsh-autosuggestions)
+#zle-line-init() {
+#    zle autosuggest-start
+#}
+#zle -N zle-line-init
 
 # shortcut to this dotfiles path is $ZSH
 export ZSH=$HOME/.dotfiles
