@@ -73,3 +73,5 @@ Now install apps:
 * brew install git-extras
 * brew install tmux
 * npm install -g gitjk
+* brew cask install google-cloud-sdk
+* brew cask install python
