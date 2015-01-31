@@ -489,6 +489,9 @@ open "${OSXDIR}/Solarized Dark.itermcolors"
 # Don’t display the annoying prompt when quitting iTerm
 defaults write com.googlecode.iterm2 PromptOnQuit -bool false
 
+# Scrolling support for mosh
+defaults write com.googlecode.iterm2 AlternateMouseScroll -bool true
+
 ###############################################################################
 # Activity Monitor                                                            #
 ###############################################################################
