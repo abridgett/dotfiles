@@ -75,3 +75,5 @@ Now install apps:
 * npm install -g gitjk
 * brew cask install google-cloud-sdk
 * brew cask install python
+* brew install Caskroom/cask/osxfuse
+* brew install sshfs
