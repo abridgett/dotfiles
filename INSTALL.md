@@ -14,7 +14,6 @@ Now install apps:
 * brew cask install dropbox
 * brew cask install flux
 * brew cask install libreoffice
-* brew cask install unarchiver
 * brew cask install the-unarchiver
 * brew cask install keepassx
 * brew cask install bbc-iplayer-downloads
