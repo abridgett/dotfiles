@@ -12,35 +12,21 @@ Now install apps:
 * brew cask install sonora
 * brew cask install alfred
 * brew cask install dropbox
-* brew cask install f.lux
 * brew cask install flux
 * brew cask install libreoffice
 * brew cask install unarchiver
 * brew cask install the-unarchiver
-* brew cask search keepass
 * brew cask install keepassx
-* brew cask search iplayer
 * brew cask install bbc-iplayer-downloads
 * brew cask install vlc
-* brew cask search android
 * brew cask install android-file-transfer
-* brew cask install android-file-transfer > install 
 * brew cask install wireshark
 * brew cask install skype
-* brew cask sourcetree
-* brew cask search sourcetree
-* brew cask search sourcetree
-* brew cask search git
 * brew cask install sourcetree
 * brew cask install github
-* brew cask search vagrant
 * brew cask install vagrant
 * brew cask install vagrant-manager
-* brew cask install virtualbo
-* brew cask search ansible
-* brew cask search vagrant
-* brew cask search virtualbox
-* brew cask search docker
+* brew cask install virtualbox
 * brew install docker
 * brew install ansible
 * brew cask install packer
