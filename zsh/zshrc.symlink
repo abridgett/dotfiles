@@ -69,6 +69,8 @@ chpwd_functions=( auto-ls $chpwd_functions )
 export ZSH=$HOME/.dotfiles
 
 unsetopt nomatch
+setopt noautomenu
+setopt nomenucomplete
 
 if [ -r $HOME/.profile.common ]; then
 	. $HOME/.profile.common
