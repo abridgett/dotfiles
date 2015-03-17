@@ -62,3 +62,5 @@ Now install apps:
 * brew cask install python
 * brew install Caskroom/cask/osxfuse
 * brew install sshfs
+* brew install pyenv-virtualenv
+* brew install pyenv-virtualenvwrapper
