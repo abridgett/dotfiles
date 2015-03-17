@@ -5,10 +5,13 @@ export PROJECTS=$HOME/projects
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
 # Run all profile scripts first
-if [ ! "`readlink $0`" ]; then
+this=`readlink $0`
+if [ ! "$this" ]; then
   mydir=`dirname $0`
+elif [ ! "${this##/*}" ]; then
+  mydir="$(dirname $this)"
 else
-  mydir="`dirname $0`/$(dirname $(readlink $0))"
+  mydir="`dirname $0`/$(dirname $this)"
 fi
 for file in $mydir/*.sh; do
   if [ -r $file ]; then
