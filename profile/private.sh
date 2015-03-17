@@ -4,5 +4,7 @@ export IRCSERVER=irc.blitzed.org
 export EMAIL=adrian@smop.co.uk
 export ORGANIZATION='Bitcube Ltd.'
 
-export SSL_CERT_FILE=$HOME/.gce/cacert.pem
+if [ -r "$HOME/.gce/cacert.pem" ]; then
+  export SSL_CERT_FILE=$HOME/.gce/cacert.pem
+fi
 export ANSIBLE_HOST_KEY_CHECKING=False
