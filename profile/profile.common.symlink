@@ -17,5 +17,7 @@ for file in $mydir/*.sh; do
 done
 
 for file in $ZSH/*/environ.sh; do
-  . $file
+  if [ -r "$file" ]; then
+    . $file
+  fi
 done
