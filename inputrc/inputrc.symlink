@@ -20,7 +20,7 @@ set show-all-if-ambiguous on
 set page-completions off
 
 # Make Tab autocomplete regardless of filename case
-set completion-ignore-case on
+set completion-ignore-case off
 
 # Do not autocomplete hidden files unless the pattern explicitly begins with a dot
 set match-hidden-files off
