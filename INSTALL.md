@@ -6,6 +6,7 @@ Install homebrew and cask:
 * brew install caskroom/cask/brew-cask
 
 Now install apps:
+* brew install vim
 * brew cask install google-chrome
 * brew cask install firefox
 * brew cask install iterm2
@@ -64,3 +65,4 @@ Now install apps:
 * brew install sshfs
 * brew install pyenv-virtualenv
 * brew install pyenv-virtualenvwrapper
+* brew cask install freemind
