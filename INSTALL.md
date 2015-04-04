@@ -66,3 +66,5 @@ Now install apps:
 * brew install pyenv-virtualenv
 * brew install pyenv-virtualenvwrapper
 * brew cask install freemind
+* brew tap homebrew/dupes
+* brew install openssh --with-brewed-openssl --with-keychain-support
