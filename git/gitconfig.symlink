@@ -1,4 +1,6 @@
 #http://www.jukie.net/~bart/conf/gitconfig
+#
+# git filter-branch -f --prune-empty --index-filter 'git rm --cached -r -q -- .; git reset -q $GIT_COMMIT -- jenkins' -- --all
 
 [alias]
 st = status
@@ -100,7 +102,9 @@ trustctime = false
 precomposeunicode = false
 
 [push]
-default = simple
+  default = current
+  # https://github.com/blog/2094-new-year-new-git-release
+  recurseSubmodules = check
 
 [apply]
 whitespace = fix
@@ -111,6 +115,7 @@ keepBackup = false
 # detects copies as well as renames
 [diff]
 renames = copies
+compactionHeuristic = true
 
 [difftool]
 prompt = false
@@ -145,3 +150,24 @@ path = ~/.dotfiles/git/gitconfig.local
 
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
+[user]
+	name = Adrian Bridgett
+	email = adrian@smop.co.uk
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path =
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[rebase]
+	autostash = true
+[submodule]
+	fetchJobs = 0
