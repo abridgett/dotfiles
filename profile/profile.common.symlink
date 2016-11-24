@@ -3,6 +3,7 @@ export PROJECTS=$HOME/projects
 
 # Very simple PATH to begin with
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH=$PATH:$HOME/projects/bitcube/scripts/bin
 
 # Run all profile scripts first
 this=`readlink $0`

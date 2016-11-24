@@ -6,8 +6,11 @@ if tty >/dev/null 2>&1; then
   mesg n
 fi
 
-if [ -r $HOME/.profile.common ]; then
-  . $HOME/.profile.common
+export HISTSIZE=2000
+if ! [ "$SHELL" != "/bin/bash" ]; then
+  if [ -r $HOME/.profile.common ]; then
+    . $HOME/.profile.common
+  fi
 fi
 
 # source .bashrc if interactive
