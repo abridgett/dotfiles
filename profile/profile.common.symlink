@@ -4,14 +4,18 @@ export PROJECTS=$HOME/projects
 # Very simple PATH to begin with
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
 
+this_script="$BASH_SOURCE"
+if [ ! "$this_script" ]; then
+  this_script="$0"
+fi
 # Run all profile scripts first
-this=`readlink $0`
+this=`readlink $this_script`
 if [ ! "$this" ]; then
-  mydir=`dirname $0`
+  mydir=`dirname $this_script`
 elif [ ! "${this##/*}" ]; then
   mydir="$(dirname $this)"
 else
-  mydir="`dirname $0`/$(dirname $this)"
+  mydir="`dirname $this_script`/$(dirname $this)"
 fi
 for file in $mydir/*.sh; do
   if [ -r $file ]; then
