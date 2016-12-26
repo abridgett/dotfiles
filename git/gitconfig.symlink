@@ -145,3 +145,10 @@ path = ~/.dotfiles/git/gitconfig.local
 
 [url "git://gist.github.com/"]
 	insteadOf = "gist:"
+[user]
+	name = Adrian Bridgett
+	email = adrian@smop.co.uk
+[filter "hawser"]
+	clean = git hawser clean %f
+	smudge = git hawser smudge %f
+	required = true
