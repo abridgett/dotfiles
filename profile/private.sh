@@ -8,3 +8,5 @@ if [ -r "$HOME/.gce/cacert.pem" ]; then
   export SSL_CERT_FILE=$HOME/.gce/cacert.pem
 fi
 export ANSIBLE_HOST_KEY_CHECKING=False
+
+#eval "$(docker-machine env dev)"

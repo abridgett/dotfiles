@@ -1,0 +1,97 @@
+#Password Authentication no
+RhostsRSAAuthentication yes
+Compression yes
+#ForwardX11 yes
+ForwardAgent yes
+ControlMaster auto
+ControlPath ~/.ssh/control/%h_%r_%p
+#ServerAliveInterval=30
+StrictHostKeyChecking no
+# Ubuntu turns this on by default which makes ssh really slow
+# in fact - #84899 - changed nsswitch.conf instead
+# update: nope, needed to turn off GSSAPI too
+GSSAPIAuthentication no
+
+# http://undeadly.org/cgi?action=article&sid=20160114142733
+# MacOS Sierra errors if we disable this insecure feature (7.1p1 and older)
+#Host *
+#  UseRoaming no
+
+# Home
+Host smop.co.uk bitcube.co.uk
+  user abridgett
+  # Don't clash with local squid (e.g. orchestra)
+  LocalForward 6128 localhost:3128
+  port 1022
+  #port 8080
+
+Host ferro
+  user abridgett
+  port 1022
+  hostname 192.168.1.2
+  
+Host *.smop.co.uk vasquez ash burke tickle bishop ferro spunkmeyer lemon
+  user abridgett
+  port 1022
+  
+Host 192.168.101.3 ripley
+  port 1022
+  LocalForward 5900 localhost:5900
+  LocalForward 5901 localhost:5901
+  LocalForward 5902 localhost:5902
+  LocalForward 5903 localhost:5903
+  LocalForward 5904 localhost:5904
+  LocalForward 5905 localhost:5905
+
+# Parents
+Host bridgett.dyndns.org
+  LocalForward 5911 localhost:5901
+  port 1022
+
+Host *.debian.org
+  user bridgett
+  port 22
+
+Host lugadmin.dnuk.lug.org.uk mailman.lug.org.uk
+  port 2222
+
+Host snm.lug.org.uk web-01.lug.org.uk hants.lug.org.uk hantslug.org.uk
+  port 22
+
+# Misc
+Host 97.107.131.148 interweave.bitcube.co.uk interweave voxygen.co.uk
+  port 22
+
+#Host jump pexbasvpn01
+#  User adrian
+#  # LDAP
+#  LocalForward 1636 pexsvcldap01:636
+#  # gitlab
+#  LocalForward 1443 pexmgtgit01:443
+#  # jenkins
+#  LocalForward 2443 pexmgtjen01:443
+#  ProxyCommand none
+
+# Jumphosts:
+#  ProxyCommand           ssh -qaY jump 'nc -w 14400 %h %p'
+#In ~/.ansible.cfg I then have
+#
+#[ssh_connection]
+#ssh_args = -o ControlPersist=15m -F ~/.ssh/config
+#scp_if_ssh = True
+#control_path = ~/.ssh/mux-%%r@%%h:%%p
+
+Host vagrant
+  Hostname localhost
+  User vagrant
+  Port 2222
+  IdentityFile /home/abridgett/.vagrant.d/insecure_private_key
+  UserKnownHostsFile /dev/null
+  StrictHostKeyChecking no
+  PasswordAuthentication no
+  IdentitiesOnly yes
+  LogLevel FATAL
+
+Host * 
+  port 22
+

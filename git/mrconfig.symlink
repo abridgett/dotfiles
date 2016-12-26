@@ -1,0 +1,81 @@
+
+[projects/bitcube/bitcube]
+checkout = git clone 'git@git.smop.co.uk:bitcube/bitcube.git' 'bitcube'
+
+[projects/bitcube/examples]
+checkout = git clone 'git@git.smop.co.uk:bitcube/examples.git' 'examples'
+
+[projects/bitcube/jobboard]
+checkout = git clone 'git@git.smop.co.uk:abridgett/jobboard.git' 'jobboard'
+
+[projects/bitcube/puppet]
+checkout = git clone 'git@git.smop.co.uk:bitcube/puppet.git' 'puppet'
+
+[projects/bitcube/scripts]
+checkout = git clone 'git@git.smop.co.uk:bitcube/scripts.git' 'scripts'
+
+[projects/smop/home]
+checkout = git clone 'git@git.smop.co.uk:smop/home.git' 'home'
+
+[projects/smop/private]
+checkout = git clone 'git@git.smop.co.uk:smop/private.git' 'private'
+
+[projects/smop/projects]
+checkout = git clone 'git@git.smop.co.uk:smop/projects.git' 'projects'
+
+[projects/yana/newadage-main]
+checkout = git clone 'git@git.smop.co.uk:newadage/newadage-main.git' 'newadage-main'
+
+[projects/bitcube/jobboard-fe]
+checkout = git clone 'git@git.smop.co.uk:abridgett/jobboard-fe.git' 'jobboard-fe'
+
+[projects/os/wifimapper-api]
+checkout = git clone 'git@github.com:opensignal/wifimapper-api.git' 'wifimapper-api'
+
+[projects/os/wifimapper-packages]
+checkout = git clone 'git@github.com:opensignal/wifimapper-packages.git' 'wifimapper-packages'
+
+[projects/os/wifimapper-pipeline]
+checkout = git clone 'git@github.com:opensignal/wifimapper-pipeline.git' 'wifimapper-pipeline'
+
+[projects/os/wifimapper-website]
+checkout = git clone 'git@github.com:opensignal/wifimapper-website.git' 'wifimapper-website'
+
+[projects/os/opensignal-insights]
+checkout = git clone 'git@github.com:opensignal/opensignal-insights.git' 'opensignal-insights'
+
+[projects/os/opensignal-ansible]
+checkout = git clone 'git@github.com:opensignal/opensignal-ansible.git' 'opensignal-ansible'
+
+[projects/os/opensignal-tileserver]
+checkout = git clone 'git@github.com:opensignal/opensignal-tileserver.git' 'opensignal-tileserver'
+
+[projects/os/data-opensignal-national-report]
+checkout = git clone 'git@github.com:opensignal/data-opensignal-national-report.git' 'data-opensignal-national-report'
+
+[projects/os/pootle]
+checkout = git clone 'git@github.com:opensignal/pootle.git' 'pootle'
+
+[projects/os/staircase3_scripts]
+checkout = git clone 'git@github.com:opensignal/staircase3_scripts.git' 'staircase3_scripts'
+
+[projects/os/deployment-scripts]
+checkout = git clone 'git@github.com:opensignal/deployment-scripts.git' 'deployment-scripts'
+
+[projects/os/data-scripts]
+checkout = git clone 'git@github.com:opensignal/data-scripts.git' 'data-scripts'
+
+[projects/os/data-hadoop-scripts]
+checkout = git clone 'git@github.com:opensignal/data-hadoop-scripts.git' 'data-hadoop-scripts'
+
+[projects/os/devops]
+checkout = git clone 'git@github.com:opensignal/devops.git' 'devops'
+
+[projects/os/opensignal-website]
+checkout = git clone 'git@github.com:opensignal/opensignal-website.git' 'opensignal-website'
+
+[projects/os/data-pipeline]
+checkout = git clone 'git@github.com:opensignal/data-pipeline.git' 'data-pipeline'
+
+[projects/os/weathersignal-website]
+checkout = git clone 'git@github.com:opensignal/weathersignal-website.git' 'weathersignal-website'
