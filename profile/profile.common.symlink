@@ -3,6 +3,7 @@ export PROJECTS=$HOME/projects
 
 # Very simple PATH to begin with
 PATH=/bin:/sbin:/usr/bin:/usr/sbin
+export PATH=$PATH:$HOME/projects/bitcube/scripts/bin
 
 this_script="$BASH_SOURCE"
 if [ ! "$this_script" ]; then

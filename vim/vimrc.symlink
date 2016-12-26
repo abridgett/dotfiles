@@ -80,8 +80,8 @@ set encoding=utf-8 nobomb
 " Change mapleader
 let mapleader=","
 " Don’t add empty newlines at the end of files
-set binary
-set noeol
+"set binary
+"set noeol
 " Enable mouse in all modes
 set mouse=a
 " use Alt+mouse to select and cmd-copy/paste

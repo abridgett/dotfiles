@@ -4,6 +4,7 @@
 
 # Compiled Python files
 *.pyc
+*.ipynb
 
 # Folder view configuration files
 .DS_Store

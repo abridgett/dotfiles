@@ -1,4 +1,6 @@
 #http://www.jukie.net/~bart/conf/gitconfig
+#
+# git filter-branch -f --prune-empty --index-filter 'git rm --cached -r -q -- .; git reset -q $GIT_COMMIT -- jenkins' -- --all
 
 [alias]
 st = status
@@ -100,7 +102,9 @@ trustctime = false
 precomposeunicode = false
 
 [push]
-default = simple
+  default = current
+  # https://github.com/blog/2094-new-year-new-git-release
+  recurseSubmodules = check
 
 [apply]
 whitespace = fix
@@ -111,6 +115,7 @@ keepBackup = false
 # detects copies as well as renames
 [diff]
 renames = copies
+compactionHeuristic = true
 
 [difftool]
 prompt = false
@@ -139,12 +144,10 @@ path = ~/.dotfiles/git/gitconfig.local
 	insteadOf = "github:"
 
 [url "git@gist.github.com:"]
-	insteadOf = "gst:"
+	insteadOf = "gist:"
 	pushInsteadOf = "gist:"
 	pushInsteadOf = "git://gist.github.com/"
 
-[url "git://gist.github.com/"]
-	insteadOf = "gist:"
 [user]
 	name = Adrian Bridgett
 	email = adrian@smop.co.uk
@@ -152,3 +155,11 @@ path = ~/.dotfiles/git/gitconfig.local
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
 	required = true
+[filter "lfs"]
+	clean = git lfs clean %f
+	smudge = git lfs smudge %f
+	required = true
+[rebase]
+	autostash = true
+[submodule]
+	fetchJobs = 0

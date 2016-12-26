@@ -17,6 +17,7 @@ iwhois
 jsontools
 mosh
 osx
+pass
 pip
 pj
 pylint
@@ -33,7 +34,7 @@ vundle
 
 zsh-users/zsh-syntax-highlighting
 #tarruda/zsh-autosuggestions
-zsh-users/zsh-completions src
+#zsh-users/zsh-completions src
 zsh-users/zsh-history-substring-search
 EOF
 
@@ -71,6 +72,8 @@ export ZSH=$HOME/.dotfiles
 unsetopt nomatch
 setopt noautomenu
 setopt nomenucomplete
+
+bindkey '^i' expand-or-complete-prefix
 
 if [ -r $HOME/.profile.common ]; then
 	. $HOME/.profile.common
