@@ -71,6 +71,8 @@ mpr = "!f() { \
   fi \
 }; f"
 
+prebase = !git-prebase $*
+
 [color]
 ui = auto
 diff = auto
