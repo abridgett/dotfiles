@@ -35,37 +35,14 @@ Host ferro
   port 1022
   hostname 192.168.1.2
   
-Host *.smop.co.uk vasquez ash burke tickle bishop ferro spunkmeyer lemon
+Host *.smop.co.uk vasquez ash burke tickle bishop spunkmeyer lemon
   user abridgett
   port 1022
-  
-Host 192.168.101.3 ripley
-  port 1022
-  LocalForward 5900 localhost:5900
-  LocalForward 5901 localhost:5901
-  LocalForward 5902 localhost:5902
-  LocalForward 5903 localhost:5903
-  LocalForward 5904 localhost:5904
-  LocalForward 5905 localhost:5905
 
 # Parents
 Host bridgett.dyndns.org
   LocalForward 5911 localhost:5901
   port 1022
-
-Host *.debian.org
-  user bridgett
-  port 22
-
-Host lugadmin.dnuk.lug.org.uk mailman.lug.org.uk
-  port 2222
-
-Host snm.lug.org.uk web-01.lug.org.uk hants.lug.org.uk hantslug.org.uk
-  port 22
-
-# Misc
-Host 97.107.131.148 interweave.bitcube.co.uk interweave voxygen.co.uk
-  port 22
 
 #Host jump pexbasvpn01
 #  User adrian
@@ -96,6 +73,30 @@ Host vagrant
   PasswordAuthentication no
   IdentitiesOnly yes
   LogLevel FATAL
+
+# OpenSignal
+Host *.opnsgnl.net ip-*.ec2.internal 10.1.*
+  IdentityFile ~/.ssh/backend_team.pem
+  User ubuntu
+
+Host jenkins wiki mesos-* spark-prod spark-stag
+  HostName %h.opnsgnl.net
+  IdentityFile ~/.ssh/backend_team.pem
+  User ubuntu
+
+Host opensignal.com weathersignal.com 74.207.226.227
+  User staircas
+
+Host staircase3.com
+  User skadmin
+
+Host airflow
+  HostName airflow.opnsgnl.net
+  User ubuntu
+
+
+Host ec2-*
+  ControlPath /tmp/%n
 
 Host * 
   port 22
