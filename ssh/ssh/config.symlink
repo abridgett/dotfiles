@@ -25,6 +25,11 @@ Host smop.co.uk bitcube.co.uk
   port 1022
   #port 8080
 
+Host newt newt.bitcube.co.uk
+  user ubuntu
+  port 1022
+  hostname newt.bitcube.co.uk
+
 Host ferro
   user abridgett
   port 1022
