@@ -1,7 +1,5 @@
 source $HOME/.antigen/antigen.zsh clone/antigen.zsh
-
 antigen use oh-my-zsh
-
 antigen bundles << EOF
 aws
 #docker
@@ -24,10 +22,10 @@ pylint
 python
 #safe-paste
 #ssh-agent
-svn
+#svn
 #taskwarrior  # todo list
-tmux
-tmuxinator
+#tmux
+#tmuxinator
 urltools
 vagrant
 vundle
@@ -37,7 +35,6 @@ zsh-users/zsh-syntax-highlighting
 #zsh-users/zsh-completions src
 zsh-users/zsh-history-substring-search
 EOF
-
 #antigen theme robbyrussell
 #antigen theme ys
 
