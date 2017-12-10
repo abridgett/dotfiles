@@ -1,34 +1,44 @@
-source $HOME/.antigen/antigen.zsh clone/antigen.zsh
+shell_debug()
+{
+   #echo "DEBUG: `python -c 'from datetime import datetime; print datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]'`: $@"
+}
+
+shell_debug "start of .zshrc"
+shell_debug "source antigen.zsh"
+source /usr/local/share/antigen/antigen.zsh
+
+shell_debug "antigen use oh-my-zsh"
 antigen use oh-my-zsh
+shell_debug "antigen bundles"
 antigen bundles << EOF
 aws
-#docker
-#git - replaces by gitfast
+docker
+docker-compose
 gitfast
 git-extras
 #git-flow
 #github
 #git-remote-branch
 #gpg-agent
+#helm
 #history-substring-search
 iwhois
 jsontools
+kops
+kubectl
 mosh
-osx
+#osx
 pass
-pip
-pj
-pylint
-python
+#pip
+#pylint
+#python
 #safe-paste
 #ssh-agent
-#svn
-#taskwarrior  # todo list
-#tmux
-#tmuxinator
+#tig # http://jonas.nitro.dk/tig/manual.html
 urltools
 vagrant
-vundle
+vault
+#vundle
 
 zsh-users/zsh-syntax-highlighting
 #tarruda/zsh-autosuggestions
@@ -38,8 +48,14 @@ EOF
 #antigen theme robbyrussell
 #antigen theme ys
 
+# Picked up by oh-my-zsh
+export CASE_SENSITIVE=true
+
 # initialises completion
+shell_debug "antigen apply"
 antigen apply
+
+shell_debug "rest of .zshrc"
 
 # For gitfast
 export GIT_PS1_SHOWDIRTYSTATE=1
@@ -73,6 +89,8 @@ setopt nomenucomplete
 bindkey '^i' expand-or-complete-prefix
 
 if [ -r $HOME/.profile.common ]; then
+  shell_debug "source .profile.common"
 	. $HOME/.profile.common
 fi
+shell_debug "end of .zshrc"
 
