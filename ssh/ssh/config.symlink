@@ -1,5 +1,6 @@
 #Password Authentication no
-RhostsRSAAuthentication yes
+# RHostsRSAAuthentication no longer supported
+#RhostsRSAAuthentication yes
 Compression yes
 #ForwardX11 yes
 ForwardAgent yes
@@ -84,7 +85,12 @@ Host jenkins wiki mesos-* spark-prod spark-stag
   IdentityFile ~/.ssh/backend_team.pem
   User ubuntu
 
-Host opensignal.com weathersignal.com 74.207.226.227
+Host opensignal.com 74.207.226.227
+  Hostname 74.207.226.227
+  User staircas
+
+Host weathersignal.com 173.255.200.24
+  Hostname 173.255.200.24
   User staircas
 
 Host staircase3.com
@@ -94,6 +100,15 @@ Host airflow
   HostName airflow.opnsgnl.net
   User ubuntu
 
+Host macmini
+  HostName macmini.opnsgnl.net
+  User jenkins
+#  PreferredAuthentications keyboard-interactive
+
+Host router.opnsgnl.net 10.254.1.1
+  User admin
+  PreferredAuthentications password
+  PubkeyAuthentication no
 
 Host ec2-*
   ControlPath /tmp/%n
