@@ -4,6 +4,7 @@ Install homebrew and cask:
 * ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
 * brew doctor
 * brew install caskroom/cask/brew-cask
+* brew tap buo/cask-upgrade
 
 Now install apps:
 * brew install vim
