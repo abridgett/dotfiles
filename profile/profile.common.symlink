@@ -1,3 +1,11 @@
+if ! type shell_debug >/dev/null 2>&1; then
+  shell_debug()
+  {
+     echo "DEBUG: `python -c 'from datetime import datetime; print datetime.utcnow().strftime("%Y-%m-%d %H:%M:%S.%f")[:-3]'`: $@"
+  }
+fi
+
+shell_debug "start of .profile.common"
 # my project space
 export PROJECTS=$HOME/projects
 
@@ -18,14 +26,41 @@ elif [ ! "${this##/*}" ]; then
 else
   mydir="`dirname $this_script`/$(dirname $this)"
 fi
+shell_debug "load $mydir/*.sh"
 for file in $mydir/*.sh; do
   if [ -r $file ]; then
     . $file
   fi
 done
 
+shell_debug "load $ZSH/*/environ.sh"
 for file in $ZSH/*/environ.sh; do
   if [ -r "$file" ]; then
     . $file
   fi
 done
+shell_debug "rest of .profile.common"
+
+# Mac...
+export JAVA_HOME=`/usr/libexec/java_home`
+
+HADOOP_HOME="`ls -1 -d /usr/local/Cellar/hadoop/* |sort|tail -n 1`"
+if [ -d "$HADOOP_HOME" ]; then
+  export PATH=$PATH:$HADOOP_HOME/bin
+  # Not sure why so complex. Adds 300ms on Mac, so hardcode this
+  #export HADOOP_CLASSPATH="`find $HADOOP_HOME -path '*/tools/lib'`/*"
+  export HADOOP_CLASSPATH="$HADOOP_HOME//libexec/share/hadoop/tools/lib/*"
+fi
+
+# Cause ansible is shite
+export ANSIBLE_NOCOWS=1
+
+# Cause apple is shite
+export LDFLAGS="-L/usr/local/opt/openssl/lib"
+export CPPFLAGS="-I/usr/local/opt/openssl/include"
+export PKG_CONFIG_PATH="/usr/local/opt/openssl/lib/pkgconfig"
+export SPARK_LOCAL_IP="127.0.0.1"
+
+alias tf=terraform
+alias bu='brew update && brew upgrade && brew cu -a && brew cleanup'
+shell_debug "end of .profile.common"

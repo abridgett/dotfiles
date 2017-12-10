@@ -6,7 +6,6 @@ if tty >/dev/null 2>&1; then
   mesg n
 fi
 
-export HISTSIZE=2000
 if ! [ "$SHELL" != "/bin/bash" ]; then
   if [ -r $HOME/.profile.common ]; then
     . $HOME/.profile.common
@@ -22,3 +21,5 @@ if [ "$BASH" ] && [ -n "$BASH_VERSION" ] && [ -z "${-%%*i*}" ]; then
     . ./.bashrc
   fi
 fi
+
+# See also .profile.common
