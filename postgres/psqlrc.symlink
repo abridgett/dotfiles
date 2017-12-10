@@ -1,3 +1,26 @@
 -- Can also use ANSI colours: %[%033[ 1;33;40 m%] etc (whitespace added for clarity - must remove)
 -- See https://en.wikipedia.org/wiki/ANSI_escape_code#Colors
+
+-- keep startup quiet
+\set QUIET 1
+-- pset is for output formats
+\pset null '¤'
+
 \set PROMPT1 '%[%033[32m%][%`date +%H:%M:%S`]%[%033[0m%] %[%033[33m%]%n%[%033[0m%]@%[%033[36m%]%m%[%033[0m%]:%[%033[1;35m%]%/%[%033[0m%]%R%#%x '
+
+\timing
+-- automatically adjust format depending upon space
+\x auto
+\set VERBOSITY verbose
+\set COMP_KEYWORD_CASE upper
+
+-- or \set du `cat .psql.du.sql`
+-- call with :du
+\set du 'SELECT nspname || \'.\' || relname AS \"relation\", pg_size_pretty(pg_relation_size(C.oid)) AS \"size\" FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN (\'pg_catalog\', \'information_schema\') ORDER BY pg_relation_size(C.oid) DESC;'
+
+\set relcount 'SELECT nspname AS schemaname,relname,reltuples FROM pg_class C LEFT JOIN pg_namespace N ON (N.oid = C.relnamespace) WHERE nspname NOT IN (\'pg_catalog\', \'information_schema\') AND relkind=\'r\' ORDER BY reltuples DESC;'
+
+-- needs "create extension pg_stat_statements"
+\set show_slow_queries 'SELECT (total_time / 1000 / 60) as total_minutes, (total_time/calls) as average_time, query FROM pg_stat_statements ORDER BY 1 DESC LIMIT 100;'
+
+\unset QUIET
