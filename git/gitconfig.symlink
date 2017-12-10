@@ -3,12 +3,32 @@
 # git filter-branch -f --prune-empty --index-filter 'git rm --cached -r -q -- .; git reset -q $GIT_COMMIT -- jenkins' -- --all
 
 [alias]
-st = status
-s = status -s
+git = "!exec git"
 
+st = status
+s = status -sb
+
+# Force push but _only_ if remote hadn't changed
+# i.e. if we've rebased _and_ someone else pushed to original, abort
+pushf = push --force-with-lease -u
+
+fetch = fetch --prune --tags
+fa = fetch --prune --tags --all
+
+undo = reset --soft HEAD^
+
+glog = log --graph --pretty=format:'%Cred%h%Creset -%C(yellow)%d%Creset %s %Cgreen(%cr) %C(bold blue)<%an>%Creset'
 rlog = log --pretty=format:\"%h %Cblue%cr%Creset %cn %Cgreen%s%Creset\"
 l = log --graph --decorate --pretty=oneline --abbrev-commit 
 la = log --graph --decorate --pretty=oneline --abbrev-commit --all 
+# log simple - e.g. "git ls v1.0.26.."  (like a mini-changelog)
+# or "git ls ..remote/master" (or vice-versa)
+ls = log log --oneline --no-merges
+# git log :/"blah" finds last commit matching "blah"
+#  To show change conflicts add --cc
+
+ap = add --patch
+mv = branch -m
 
 br = branch
 co = checkout 
@@ -26,6 +46,13 @@ tags = tag -l
 branches = branch -a
 remotes = remote -v
 
+rmtag = push --delete origin
+
+# Show the last 10 branches I have worked on
+recent = for-each-ref --count=10 --sort=-committerdate refs/heads/ --format="%(refname:short)"
+
+# Show my last commits
+recap = ! git log --all --oneline --no-merges --author=`git config --get user.email`
 
 # Show the diff between the latest commit and the current state
 d = !"git diff-index --quiet HEAD -- || clear; git --no-pager diff --patch-with-stat"
@@ -57,7 +84,13 @@ fm = "!f() { git log --pretty=format:'%C(yellow)%h  %Cblue%ad  %Creset%s%Cgreen 
 
 # Remove branches that have already been merged with master
 # a.k.a. ‘delete merged’
-dm = "!git branch --merged | grep -v '\\*' | xargs -n 1 git branch -d"
+dm = "!git branch --merged | egrep -v '^\\*|release/' | xargs -n 1 git branch -d"
+rpo = "!git remote prune origin"
+sweep = "!git checkout master && git pull && git rpo && git dm"
+mm = "!git pull && git merge master --ff-only"
+
+# Checkout submodules nicely
+su = "!git submodule update --init --remote --recursive"
 
 # Merge GitHub pull request on top of the `master` branch
 mpr = "!f() { \
@@ -71,7 +104,18 @@ mpr = "!f() { \
   fi \
 }; f"
 
+# https://github.com/koreno/prebase
 prebase = !git-prebase $*
+rebase = !git-prebase $*
+
+# Temporarily ignore files
+# http://blog.apiaxle.com/post/handy-git-tips-to-stop-you-getting-fired/
+assume = update-index --assume-unchanged
+unassume = update-index --no-assume-unchanged
+assumed = "!git ls-files -v | grep ^h | cut -c 3-"
+
+#bump = commit -m 'bump version' version.txt
+cl = commit -m 'update changelog' CHANGELOG.md
 
 [color]
 ui = auto
@@ -93,8 +137,9 @@ branch = auto
 #    untracked = cyan
 
 [core]
-pager = less -FRSX
-excludesfile = ~/.gitignore
+# https://github.com/git/git/tree/master/contrib/diff-highlight
+pager = diff-highlight | less -FRSX
+excludesfile = /Users/adrian/.gitignore
 # Make `git rebase` safer on OS X
 # More info: <http://www.git-tower.com/blog/make-git-rebase-safe-on-osx/>
 trustctime = false
@@ -103,10 +148,20 @@ trustctime = false
 # http://michael-kuehnel.de/git/2014/11/21/git-mac-osx-and-german-umlaute.html
 precomposeunicode = false
 
+# diff highlights (or not) these issues
+whitespace = fix,-indent-with-non-tab,trailing-space,cr-at-eol
+
+#[branch]
+#autoSetupMerge = always
+
 [push]
-  default = current
-  # https://github.com/blog/2094-new-year-new-git-release
-  recurseSubmodules = check
+#default = simple
+# Maybe branch.autoSetupMerge=true can avoid this?
+default = current
+# https://github.com/blog/2094-new-year-new-git-release
+recurseSubmodules = check
+# push tags too?
+# followTags = true
 
 [apply]
 whitespace = fix
@@ -114,13 +169,23 @@ whitespace = fix
 [mergetool]
 keepBackup = false
 
-# detects copies as well as renames
 [diff]
 renames = copies
 compactionHeuristic = true
+tool = icdiff
+algorithm = patience
+#submodule = log
+mnemonicprefix = true
 
 [difftool]
 prompt = false
+
+[difftool "icdiff"]
+cmd = /usr/local/bin/icdiff --line-numbers $LOCAL $REMOTE
+
+[grep]
+extendRegexp = true
+lineNumber = true
 
 # Delay in deci-seconds
 [help]
@@ -129,6 +194,17 @@ autocorrect = 10
 # Include summaries of merged commits in newly created merge commit messages
 [merge]
 log = true
+conflictstyle = diff3
+# git merge --ff required for non-ff merges
+#ff = only
+
+[commit]
+#gpgSign = true
+
+[status]
+# Show all files under untracked directories
+#showUntrackedFiles = all
+#submoduleSummary = true
 
 [hub]
 protocol = https
@@ -142,26 +218,46 @@ path = ~/.dotfiles/git/gitconfig.local
 	pushInsteadOf = "github:"
 	pushInsteadOf = "git://github.com/"
 
-[url "git://github.com/"]
-	insteadOf = "github:"
+# Replace git with https
+#[url "https://github.com/"]
+  insteadOf = "git@github.com:"
+
+[url "git@github.com:opensignal/"]
+#[url "https://github.com/opensignal/"]
+	insteadOf = "os:"
 
 [url "git@gist.github.com:"]
 	insteadOf = "gist:"
 	pushInsteadOf = "gist:"
 	pushInsteadOf = "git://gist.github.com/"
 
+[url "git@github.com:"]
+  insteadOf = https://github.com/
+
 [user]
 	name = Adrian Bridgett
 	email = adrian@smop.co.uk
+	useConfigOnly = true
 [filter "hawser"]
 	clean = git hawser clean %f
 	smudge = git hawser smudge %f
 	required = true
 [filter "lfs"]
-	clean = git lfs clean %f
-	smudge = git lfs smudge %f
+	clean = git-lfs clean -- %f
+	smudge = git-lfs smudge -- %f
 	required = true
+	process = git-lfs filter-process
 [rebase]
 	autostash = true
 [submodule]
 	fetchJobs = 0
+#[sequence]
+#	editor = rebase-editor -c
+[difftool "sourcetree"]
+	cmd = opendiff \"$LOCAL\" \"$REMOTE\"
+	path = 
+[mergetool "sourcetree"]
+	cmd = /Applications/SourceTree.app/Contents/Resources/opendiff-w.sh \"$LOCAL\" \"$REMOTE\" -ancestor \"$BASE\" -merge \"$MERGED\"
+	trustExitCode = true
+[commit]
+	template = /Users/adrian/.stCommitMsg
